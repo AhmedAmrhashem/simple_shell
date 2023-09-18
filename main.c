@@ -21,7 +21,7 @@ int main(void)
 		{
 			if (isatty(STDIN_FILENO))
 			{
-				_put("\n");
+				_puts("\n");
 				free(buffer);
 			}
 			exit(0);
