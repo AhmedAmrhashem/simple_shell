@@ -64,5 +64,6 @@ char *_which(path_l *h, char *file_command);
 void (*builtin_func(char **argv))(char **argv);
 void builtin_exit(char **argv);
 void buitin_env(char **argv __attribute__((unused)));
+void builtin_cd(char **argv);
 
 #endif
