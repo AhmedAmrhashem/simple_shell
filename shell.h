@@ -66,4 +66,7 @@ void builtin_exit(char **argv);
 void buitin_env(char **argv __attribute__((unused)));
 void builtin_cd(char **argv);
 
+/* special_cases */
+void hash_handle(char **argv);
+
 #endif

@@ -27,6 +27,7 @@ int main(void)
 			exit(0);
 		}
 		argv = string_split(buffer);
+		hash_handle(argv);
 		if (argv && argv[0])
 		{
 			val = _getenv("PATH");
@@ -51,4 +52,29 @@ int main(void)
 
 	}
 	return (0);
+}
+
+/**
+ * hash_handle - ignoring any string that starts with #
+ * @argv: user input
+ * Return: void
+ */
+void hash_handle(char **argv)
+{
+	int i = 0;
+
+	while (argv[i])
+	{
+		if (argv[i][0] == '#')
+		{
+			while (argv[i])
+			{
+				argv[i] = NULL;
+				free(argv[i]);
+				i++;
+			}
+			return;
+		}
+		i++;
+	}
 }
