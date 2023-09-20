@@ -4,13 +4,13 @@
  * main - entry point to shell
  * Return: 0 in success
  */
-int main(void)
+int main(int argc __attribute__((unused)), char **argv)
 {
 	char *buffer = NULL;
 	size_t len = 0;
 	int tmp = 0, i = 0;
 	path_l *head;
-	char *val, **argv, *path_name;
+	char *val, *path_name;
 	void (*func)(char **);
 
 	signal(SIGINT, handle_sigint);
