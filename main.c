@@ -29,7 +29,7 @@ int main(int argc __attribute__((unused)), char **argv)
 			exit(EXIT_SUCCESS);
 		}
 
-		lineargs = shell_split_line(line);
+		lineargs = string_split(line);
 
 		status = shell_execute(lineargs);
 		if (status == 2)

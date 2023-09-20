@@ -61,17 +61,17 @@ int _strcmp(char *s1, char *s2)
 }
 
 /**
- * shell_split_line - splits the line in tokens
- * @line: get the line from the user input
- * Return: Return an array of strings of args to execute
+ * string_split - spliting the string into individual tokens
+ * @str: string to be tokenized
+ * Return: char double pointer
  */
-char **shell_split_line(char *line)
+char **string_split(char *str)
 {
 	int buffersize = 0, position = 0;
-	char **arraystr = 0;
-	char *str;
+	char **arraystr = NULL;
+	char *string;
 
-	while (line[buffersize])
+	while (str[buffersize])
 	{
 		buffersize++;
 	}
@@ -81,17 +81,17 @@ char **shell_split_line(char *line)
 		perror("lsh");
 		exit(EXIT_FAILURE);
 	}
-	str = strtok(line, SHELL_TOK_DELIM);
-	while (str != NULL)
+	string = strtok(str, TOK_DELIM);
+	while (string != NULL)
 	{
-		arraystr[position] = str;
+		arraystr[position] = string;
 		position++;
 		if (!arraystr)
 		{
 			perror("lsh");
 			exit(EXIT_FAILURE);
 		}
-		str = strtok(NULL, SHELL_TOK_DELIM);
+		string = strtok(NULL, TOK_DELIM);
 	}
 	arraystr[position] = NULL;
 	return (arraystr);
