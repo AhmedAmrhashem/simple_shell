@@ -35,7 +35,7 @@ char *_getenv(const char *name)
  */
 void execute_p(char **argv)
 {
-	pid_t id;
+	pid_t id, wid;
 	int status;
 
 	id = fork();
@@ -47,13 +47,18 @@ void execute_p(char **argv)
 	if (id == 0)
 	{
 		if (execve(argv[0], argv, environ) == -1)
-		{
 			perror(argv[0]);
-			exit(EXIT_FAILURE);
-		}
+		exit(EXIT_FAILURE);
 	}
 	else
-		wait(&status);
+	{
+		do
+		{
+			wid = waitpid(id, &status, WUNTRACED);
+		}
+		while (!WIFEXITED(status) && !WIFSIGNALED(status));
+		wid = 0;
+	}
 }
 
 /**
