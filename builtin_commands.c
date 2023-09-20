@@ -72,7 +72,7 @@ void builtin_cd(char **argv)
 
 	if (!argv[1])
 	{
-		perror(_getenv("_"));
+		perror("lsh");
 		return;
 	}
 
@@ -80,13 +80,13 @@ void builtin_cd(char **argv)
 
 	if (!old_dir)
 	{
-		perror(_getenv("_"));
+		perror("lsh");
 		return;
 	}
 
 	if (chdir(argv[1]) == -1)
 	{
-		perror(_getenv("_"));
+		perror("lsh");
 		return;
 	}
 	free(old_dir);
