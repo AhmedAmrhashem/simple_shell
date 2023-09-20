@@ -4,7 +4,7 @@
  * buitin_env - printd the current envroment
  * @argv: used only to relate to other builtin functions
  * Return: void
- */ 
+ */
 void buitin_env(char **argv __attribute__((unused)))
 {
 	int i = 0;
