@@ -23,9 +23,9 @@
 
 typedef struct path
 {
-        char *direction;
-        struct path *next;
-}path_l;
+	char *direction;
+	struct path *next;
+} path_l;
 
 /**
  * struct builtin_commands - struct for builtin commands
@@ -36,9 +36,9 @@ typedef struct path
 
 typedef struct builtin_commands
 {
-        char *command;
-        void (*f)(char **);
-}built;
+	char *command;
+	void (*f)(char **);
+} built;
 
 extern char **environ;
 
