@@ -24,7 +24,7 @@ int shell_cd(char **args);
 int shell_help(char **args);
 int shell_exit(char **args);
 int shell_env(char **environ);
-int lsh_eof(char **args);
+int End_of_File(char **args);
 
 /* Environment variables and Function´s */
 

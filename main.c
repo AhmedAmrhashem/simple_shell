@@ -1,18 +1,18 @@
 #include "shell.h"
 
 /**
- * main - main function
- * @argc: get a count of arguments
- * @argv: get a array of arguments
- * Return: return EXIT_SUCCESS
+ * main - entry point
+ * @argc: the amount of arguments used
+ * @argv: pointer to a pointer that takes input
+ * Return: return 0 (EXIT_SUCCESS)
  */
 int main(int argc __attribute__((unused)), char **argv)
 {
-	int promptline = 0;
+	int prompt = 0;
 	char **lineargs = NULL;
 	int status = 1;
-	char *line = NULL;
-	size_t buffersize = 0;
+	char *pathline = NULL;
+	size_t buff = 0;
 
 	while (status)
 	{
@@ -21,15 +21,15 @@ int main(int argc __attribute__((unused)), char **argv)
 			_puts("#cisfun$ ");
 		}
 
-		promptline = getline(&line, &buffersize, stdin);
+		prompt = getline(&pathline, &buff, stdin);
 
-		if (promptline == EOF)
+		if (prompt == EOF)
 		{
-			free(line);
+			free(pathline);
 			exit(EXIT_SUCCESS);
 		}
 
-		lineargs = shell_split_line(line);
+		lineargs = shell_split_line(pathline);
 
 		status = shell_execute(lineargs);
 		if (status == 2)
@@ -45,7 +45,17 @@ int main(int argc __attribute__((unused)), char **argv)
 		}
 		free(lineargs);
 	}
-	free(line);
-
+	free(pathline);
 	return (EXIT_SUCCESS);
+}
+
+/**
+ * End_of_File - handle end of file
+ * @args: arguements
+ * Return: 0
+ */
+int End_of_File(char **args)
+{
+        (void)args;
+        return (0);
 }

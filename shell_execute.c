@@ -14,7 +14,7 @@ int shell_execute(char **args)
 	char *builtin_str[] = {"cd", "exit", "env", "^D"};
 
 	int (*builtin_func[]) (char **) = {&shell_cd, &shell_exit,
-					   &shell_env, &lsh_eof};
+						&shell_env, &End_of_File};
 	if (args[0] == NULL)
 		return (1);
 	for (i = 0; i < (int)(sizeof(builtin_str) / sizeof(char *)); i++)

@@ -1,4 +1,5 @@
 #include "shell.h"
+
 /**
  * shell_launch - execute a binary file with commands and returns value
  * @args: array of strings with the arguments
@@ -7,12 +8,12 @@
  */
 int shell_launch(char **args, int flag)
 {
-	pid_t pid;
+	pid_t id;
 	int status;
 	pid_t wpid;
 
-	pid = fork();
-	if (pid == 0)
+	id = fork();
+	if (id == 0)
 	{
 		if (execve(args[0], args, NULL) == -1)
 		{
@@ -21,14 +22,14 @@ int shell_launch(char **args, int flag)
 		}
 		exit(EXIT_FAILURE);
 	}
-	else if (pid < 0)
+	else if (id < 0)
 	{
 		perror("lsh");
 	}
 	else
 	{
 		do {
-			wpid = waitpid(pid, &status, WUNTRACED);
+			wpid = waitpid(id, &status, WUNTRACED);
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 		wpid = 0;
 	}
