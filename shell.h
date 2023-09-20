@@ -1,79 +1,53 @@
-#ifndef SHELL_H
-#define SHELL_H
+#ifndef SHELL_BASIC_H
+#define SHELL_BASIC_H
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
-#include <sys/wait.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <string.h>
-#include <stddef.h>
 #include <signal.h>
+#include <unistd.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <fcntl.h>
 #include <errno.h>
 
-#define BUFF_SIZE 1024
+/*  File prototypes  */
+void shell_loop(char **args);
+char *shell_read_line(void);
+char **shell_split_line(char *line);
+int shell_launch(char **args, int flag);
+int shell_execute(char **args);
+void _free_double_pointer(char **d_pointer);
+char *_getline_command(void);
 
-/**
- * struct path - linked list to path directories
- * @direction: evergy possible path directories
- * @next: next node
- * Description: linked list for path direction
- */
-
-typedef struct path
-{
-        char *direction;
-        struct path *next;
-}path_l;
-
-/**
- * struct builtin_commands - struct for builtin commands
- * @command: name of the command
- * @f: function pointer of the command
- * Description: making a strcut to realate all of the builtin commands
- */
-
-typedef struct builtin_commands
-{
-        char *command;
-        void (*f)(char **);
-}built;
-
-extern char **environ;
-
-/* write_functions */
-void _puts(char *str);
-int _putchar(char c);
-
-/* string_functions */
-int _strlen(char *s);
-char *_strdup(char *str);
-char *_strconcat(char *str1, char *str2);
-char **string_split(char *str);
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
-
-/* execute_command */
+/* Functions for Built-in commands */
+int shell_cd(char **args);
+int shell_help(char **args);
+int shell_exit(char **args);
+int shell_env(char **environ);
+int lsh_eof(char **args);
+int shell_num_builtins(void);
+/* Environment variables and Function´s */
 char *_getenv(const char *name);
-void execute_p(char **arv);
-path_l *add_node_end(path_l **head, char *str);
-path_l *link_path(char *dir);
-char *_which(path_l *h, char *file_command);
-
-/* builtin_commands */
-void (*builtin_func(char **argv))(char **argv);
-void builtin_exit(char **argv);
-void buitin_env(char **argv __attribute__((unused)));
-void builtin_cd(char **argv);
-
-/* special_cases */
-void hash_handle(char **argv);
-void free_list(path_l *head);
-
-void handle_sigint(int sig);
-void handle_sigquit(int sig);
-void handle_sigstp(int sig);
-void _puterror(char *err);
-void prompt(void);
+extern char **environ;
+void handle_signal(int m);
+/* getfile */
+void assign_lineptr(char **lineptr, size_t *n, char *buffer, size_t b);
+ssize_t _getfile(char **lineptr, size_t *n, FILE *stream);
+/* paths  */
+char *test_path(char **path, char *command);
+char *append_path(char *path, char *command);
+char *find_path(void);
+/* Functions for strings */
+int _strlen(char *string);
+int _strcmp(char *s1, char *s2);
+int _strncmp(char *s1, char *s2, int n);
+char *_strcat(char *dest, char *src);
+char *_strcpy(char *dest, const char *src);
+char *str_concat(char *s1, char *s2);
+int _putchar(char c);
+void _puts(char *str);
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 
 #endif
