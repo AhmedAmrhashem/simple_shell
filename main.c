@@ -20,17 +20,18 @@ void sig_handler(int sig_num)
 int main(void)
 {
 	char *buffer = NULL, **argv, *path_name;
-	ssize_t len = 0;
+	size_t len = 0;
+	int tmp = 0;
 	path_l *head;
-	char *val, *val2;
+	char *val;
 	void (*func)(char **);
 
 	signal(SIGINT, sig_handler);
-	while (len != EOF)
+	while (tmp != EOF)
 	{
 		_puts("#cisfun$ ");
-		getline(&buffer, &len, stdin);
-		if (len == -1)
+		tmp = getline(&buffer, &len, stdin);
+		if (tmp == -1)
 		{
 			if (isatty(STDIN_FILENO))
 			{

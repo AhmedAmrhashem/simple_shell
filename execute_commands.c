@@ -46,7 +46,7 @@ void execute_p(char **argv)
 	
     if (id == 0)
     {
-		if (execve(argv[0], argv, environ) == -1);
+		if (execve(argv[0], argv, environ) == -1)
 			{
 				perror(argv[0]);
 				exit(EXIT_FAILURE);
