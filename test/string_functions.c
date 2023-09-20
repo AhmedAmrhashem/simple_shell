@@ -21,21 +21,40 @@ int _strlen(char *s)
  * @str2: pointer char
  * Return: appended strings
  */
-char *_strconcat(char *str1, char *str2)
+char *_strconcat(char *s1, char *s2)
 {
-	int l1 = _strlen(str1), l2 = _strlen(str2), i = 0;
-	char *new = malloc((l1 + l2) * sizeof(char));
+	char *array = NULL;
+	int i = 0, l1 = 0, l2 = 0;
 
-	if (!new)
+	if (s1 == NULL)
+		s1 = "";
+	if (s2 == NULL)
+		s2 = "";
+	while (s1[l1] != '\0')
+	{
+		l1++;
+	}
+	while (s2[l2] != '\0')
+	{
+		l2++;
+	}
+	array = malloc(sizeof(*array) * (l1 + l2 + 1));
+	if (array == NULL)
 		return (NULL);
-
-	for (i = 0; i < l1; i++)
-		new[i] = str1[i];
-
-	for (i = 0; i < l2; i++)
-		new[i + l1] = str2[i];
-
-	return (new);
+	while (*s1)
+	{
+		array[i] = *s1;
+		i++;
+		s1++;
+	}
+	while (*s2)
+	{
+		array[i] = *s2;
+		i++;
+		s2++;
+	}
+	array[i] = '\0';
+	return (array);
 }
 
 /**
@@ -121,22 +140,40 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
  */
 char **string_split(char *str)
 {
-	char *token, **tokens;
-	int i = 0;
+	int buffersize = 0, position = 0;
+	char **arraystr = 0;
+	char *strg;
 
-	token = strtok(str, TOK_DELIM);
-	while (token)
+	while (str[buffersize])
 	{
-		i++;
-		tokens = _realloc(tokens, (i) * sizeof(char *), (i + 2) * sizeof(char *));
-		if (tokens == NULL)
+		buffersize++;
+	}
+	arraystr = malloc(buffersize * sizeof(char *));
+	if (!arraystr)
+	{
+		perror("lsh");
+		exit(EXIT_FAILURE);
+	}
+	strg = strtok(str, TOK_DELIM);
+	while (strg != NULL)
+	{
+		arraystr[position] = strg;
+		position++;
+		if (!arraystr)
 		{
 			perror("lsh");
 			exit(EXIT_FAILURE);
 		}
+<<<<<<< HEAD:test/string_functions.c
 		tokens[i - 1] = token;
 		token = strtok(NULL, TOK_DELIM);
 	}
 
 	return (tokens);
+=======
+		strg = strtok(NULL, TOK_DELIM);
+	}
+	arraystr[position] = NULL;
+	return (arraystr);
+>>>>>>> 95ac5c90ce0b346bd0c0afc745c2b052cfb975c2:string_functions.c
 }
