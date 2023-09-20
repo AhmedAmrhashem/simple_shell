@@ -131,7 +131,7 @@ char **string_split(char *str)
 		tokens = _realloc(tokens, (i) * sizeof(char *), (i + 2) * sizeof(char *));
 		if (tokens == NULL)
 		{
-			perror(_getenv("_"));
+			perror("lsh");
 			exit(EXIT_FAILURE);
 		}
 		tokens[i - 1] = token;

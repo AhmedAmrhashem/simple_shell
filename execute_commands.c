@@ -41,13 +41,13 @@ void execute_p(char **argv)
 	id = fork();
 	if (id == -1)
 	{
-		perror(_getenv("_"));
+		perror("lsh");
 	}
 
 	if (id == 0)
 	{
 		if (execve(argv[0], argv, environ) == -1)
-			perror(argv[0]);
+			perror("lsh");
 		exit(EXIT_FAILURE);
 	}
 	else
