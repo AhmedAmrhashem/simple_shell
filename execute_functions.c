@@ -55,24 +55,43 @@ int shell_execute(char **args)
  */
 char *_getenv(const char *name)
 {
-	char **env = environ, *namePtr;
-	char *var, *value;
+	int i = 0, j = 0, k = 0;
+	int len = _strlen((char *)name);
+	char **env = environ;
 
-	for (; *env != NULL; env++)
+	char *str = malloc(sizeof(char) * 150);
+
+	if (!str)
 	{
-		var = *env;
-		value = var;
-		namePtr = (char *)name;
-
-		while (*namePtr != '\0' && *value != '=' && *value == *namePtr)
+		return (NULL);
+	}
+	if (!name)
+	{
+		free(str);
+		return (NULL);
+	}
+	while (env[i][j] != '\0')
+	{
+		if (_strncmp(env[i], (char *)name, len) != 0)
 		{
-			namePtr++;
-			value++;
+			i++;
 		}
-		if (*namePtr == '\0' && *value == '=')
-			return (value + 1);
+		else
+		{
+			if (env[i][len] == '=')
+			{
+				while (env[i][len + j] != '\0')
+				{
+					str[k] = (env[i][len + j + 1]);
+					k++;
+					j++;
+				}
+				return ((char *)str);
+			}
+		}
 	}
 
+	free(str);
 	return (NULL);
 }
 
