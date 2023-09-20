@@ -15,31 +15,6 @@ int _strlen(char *s)
 	return (len);
 }
 /**
- * _strdup - this functions copy a string.
- * @str: the string to copy
- * Description: this function copy a string)?
- * section header: the header of this function is hsh.
- * Return: this is a void function no return
- **/
-char *_strdup(char *str)
-{
-	char *p;
-	int i, s;
-
-	i = 0;
-	if (str == NULL)
-		return (NULL);
-	while (str[i] != '\0')
-		i++;
-	p = malloc(i * sizeof(*str) + 1);
-	if (p == NULL)
-		return (NULL);
-	for (s = 0; s < i; s++)
-		*(p + s) = *(str + s);
-	*(p + s) = '\0';
-	return (p);
-}
-/**
  * _strncmp - this function compare two strings
  * @s1: the first string
  * @s2: the second string
@@ -83,4 +58,41 @@ int _strcmp(char *s1, char *s2)
 	{
 		return (*s1 - *s2);
 	}
+}
+
+/**
+ * shell_split_line - splits the line in tokens
+ * @line: get the line from the user input
+ * Return: Return an array of strings of args to execute
+ */
+char **shell_split_line(char *line)
+{
+	int buffersize = 0, position = 0;
+	char **arraystr = 0;
+	char *str;
+
+	while (line[buffersize])
+	{
+		buffersize++;
+	}
+	arraystr = malloc(buffersize * sizeof(char *));
+	if (!arraystr)
+	{
+		perror("lsh");
+		exit(EXIT_FAILURE);
+	}
+	str = strtok(line, SHELL_TOK_DELIM);
+	while (str != NULL)
+	{
+		arraystr[position] = str;
+		position++;
+		if (!arraystr)
+		{
+			perror("lsh");
+			exit(EXIT_FAILURE);
+		}
+		str = strtok(NULL, SHELL_TOK_DELIM);
+	}
+	arraystr[position] = NULL;
+	return (arraystr);
 }

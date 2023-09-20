@@ -12,6 +12,8 @@
 #include <fcntl.h>
 #include <errno.h>
 
+#define SHELL_TOK_DELIM " :\t\r\n\a"
+
 /*  File prototypes  */
 char *shell_read_line(void);
 char **shell_split_line(char *line);
