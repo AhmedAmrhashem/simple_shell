@@ -65,6 +65,8 @@ int main(void)
 			continue;
 
 	}
+	free(buffer);
+	free(argv);
 	return (0);
 }
 

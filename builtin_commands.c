@@ -68,7 +68,7 @@ void (*builtin_func(char **argv))(char **argv)
  */
 void builtin_cd(char **argv)
 {
-	char *old_dir, *new_dir;
+	char *old_dir;
 
 	if (!argv[1])
 	{
@@ -89,14 +89,5 @@ void builtin_cd(char **argv)
 		perror(_getenv("_"));
 		return;
 	}
-
-	new_dir = getcwd(NULL, 0);
-	if (!new_dir)
-	{
-		perror(_getenv("_"));
-		return;
-	}
-
 	free(old_dir);
-	free(new_dir);
 }
