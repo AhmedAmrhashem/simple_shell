@@ -1,6 +1,18 @@
 #include "shell.h"
 
 /**
+ * sig_handler - checks if Ctrl C is pressed
+ * @sig_num: int
+ */
+void sig_handler(int sig_num)
+{
+	if (sig_num == SIGINT)
+	{
+		_puts("\n#cisfun$ ");
+	}
+}
+
+/**
  * main - entry point to shell
  * Return: 0 in success
  */
@@ -13,9 +25,10 @@ int main(void)
 	char *val, *val2;
 	void (*func)(char **);
 
+	signal(SIGINT, sig_handler);
 	while (len != EOF)
 	{
-		_puts("$ ");
+		_puts("#cisfun$ ");
 		getline(&buffer, &len, stdin);
 		if (len == -1)
 		{
