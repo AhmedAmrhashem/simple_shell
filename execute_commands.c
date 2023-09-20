@@ -71,7 +71,9 @@ void execute_p(char **argv)
 	}
 	else
 	{
-		wait(&status);
+		do {
+			waitpid(id, &status, WUNTRACED);
+		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
 }
 
