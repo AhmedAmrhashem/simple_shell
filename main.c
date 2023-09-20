@@ -1,112 +1,44 @@
 #include "shell.h"
 
 /**
- * main - entry point to shell
- * Return: 0 in success
+ * main - entry point
+ * @ac: arg count
+ * @av: arg vector
+ *
+ * Return: 0 on success, 1 on error
  */
-int main(void)
+int main(int ac, char **av)
 {
-	char *buffer = NULL;
-	size_t len = 0;
-	int tmp = 0, i = 0;
-	path_l *head;
-	char *val, **argv, *path_name;
-	void (*func)(char **);
+	info_t info[] = { INFO_INIT };
+	int fd = 2;
 
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, handle_sigquit);
-	signal(SIGTSTP, handle_sigstp);
-	while (tmp != EOF)
+	asm ("mov %1, %0\n\t"
+		"add $3, %0"
+		: "=r" (fd)
+		: "r" (fd));
+
+	if (ac == 2)
 	{
-		_puts("$ ");
-		tmp = getline(&buffer, &len, stdin);
-		if (tmp == -1)
+		fd = open(av[1], O_RDONLY);
+		if (fd == -1)
 		{
-			if (isatty(STDIN_FILENO))
+			if (errno == EACCES)
+				exit(126);
+			if (errno == ENOENT)
 			{
-				_puts("\n");
-				free(buffer);
+				_eputs(av[0]);
+				_eputs(": 0: Can't open ");
+				_eputs(av[1]);
+				_eputchar('\n');
+				_eputchar(BUF_FLUSH);
+				exit(127);
 			}
-			exit(0);
+			return (EXIT_FAILURE);
 		}
-		argv = string_split(buffer);
-		hash_handle(argv);
-		if (argv && argv[0])
-		{
-			val = _getenv("PATH");
-			head = link_path(val);
-			path_name = _which(head, argv[0]);
-			func = builtin_func(argv);
-			if (func)
-			{
-				func(argv);
-			}
-			else if (!path_name)
-			{
-				execute_p(argv);
-			}
-			else if(path_name)
-			{
-				argv[0] = path_name;
-				execute_p(argv);
-				free(argv[0]);
-			}
-		}
-		else
-		{
-			continue;
-		}
+		info->readfd = fd;
 	}
-	free(buffer);
-	while (argv[i])
-	{
-		free(argv[i]);
-		i++;
-	}
-	free(argv);
-	free_list(head);
-	return (0);
-}
-
-/**
- * hash_handle - ignoring any string that starts with #
- * @argv: user input
- * Return: void
- */
-void hash_handle(char **argv)
-{
-	int i = 0;
-
-	while (argv[i])
-	{
-		if (argv[i][0] == '#')
-		{
-			while (argv[i])
-			{
-				argv[i] = NULL;
-				free(argv[i]);
-				i++;
-			}
-			return;
-		}
-		i++;
-	}
-}
-
-/**
- * free_list - frees a linked list
- * @head: start node
- * Return: void
- */
-void free_list(path_l *head)
-{
-	path_l *remove = head;
-
-	while (head)
-	{
-		remove = head->next;
-		free(head->direction);
-		free(head);
-		head = remove;
-	}
+	populate_env_list(info);
+	read_history(info);
+	hsh(info, av);
+	return (EXIT_SUCCESS);
 }
