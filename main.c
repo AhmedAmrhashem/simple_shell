@@ -55,6 +55,6 @@ int main(int argc __attribute__((unused)), char **argv)
  */
 int End_of_File(char **args)
 {
-        (void)args;
-        return (0);
+	(void)args;
+	return (0);
 }
