@@ -121,22 +121,32 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
  */
 char **string_split(char *str)
 {
-	char *token, **tokens;
-	int i = 0;
+	int buffersize = 0, position = 0;
+	char **arraystr = 0;
+	char *strg;
 
-	token = strtok(str, TOK_DELIM);
-	while (token)
+	while (str[buffersize])
 	{
-		i++;
-		tokens = _realloc(tokens, (i) * sizeof(char *), (i + 2) * sizeof(char *));
-		if (tokens == NULL)
+		buffersize++;
+	}
+	arraystr = malloc(buffersize * sizeof(char *));
+	if (!arraystr)
+	{
+		perror("lsh");
+		exit(EXIT_FAILURE);
+	}
+	strg = strtok(str, TOK_DELIM);
+	while (strg != NULL)
+	{
+		arraystr[position] = strg;
+		position++;
+		if (!arraystr)
 		{
 			perror("lsh");
 			exit(EXIT_FAILURE);
 		}
-		tokens[i - 1] = token;
-		token = strtok(NULL, " \t\n");
-		}
-
-	return (tokens);
+		strg = strtok(NULL, TOK_DELIM);
+	}
+	arraystr[position] = NULL;
+	return (arraystr);
 }
