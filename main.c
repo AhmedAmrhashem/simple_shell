@@ -20,6 +20,15 @@ int main(void)
 	{
 		_puts("$ ");
 		tmp = getline(&buffer, &len, stdin);
+		if (tmp == -1)
+		{
+			if (isatty(STDIN_FILENO))
+			{
+				_puts("\n");
+				free(buffer);
+			}
+			exit(0);
+		}
 		argv = string_split(buffer);
 		hash_handle(argv);
 		if (argv && argv[0])
