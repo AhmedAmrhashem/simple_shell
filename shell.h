@@ -70,4 +70,10 @@ void builtin_cd(char **argv);
 void hash_handle(char **argv);
 void free_list(path_l *head);
 
+void handle_sigint(int sig);
+void handle_sigquit(int sig);
+void handle_sigstp(int sig);
+void _puterror(char *err);
+void prompt(void);
+
 #endif

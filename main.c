@@ -13,6 +13,9 @@ int main(void)
 	char *val, **argv, *path_name;
 	void (*func)(char **);
 
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, handle_sigquit);
+	signal(SIGTSTP, handle_sigstp);
 	while (tmp != EOF)
 	{
 		_puts("$ ");
