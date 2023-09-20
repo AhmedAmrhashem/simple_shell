@@ -50,7 +50,7 @@ int _putchar(char c);
 /* string_functions */
 int _strlen(char *s);
 char *_strdup(char *str);
-char *_strconcat(char *str1, char *str2);
+char *_strconcat(char *s1, char *s2);
 char **string_split(char *str);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 int _strncmp(char *s1, char *s2, int n);

@@ -21,21 +21,40 @@ int _strlen(char *s)
  * @str2: pointer char
  * Return: appended strings
  */
-char *_strconcat(char *str1, char *str2)
+char *_strconcat(char *s1, char *s2)
 {
-	int l1 = _strlen(str1), l2 = _strlen(str2), i = 0;
-	char *new = malloc((l1 + l2) * sizeof(char));
+	char *array = NULL;
+	int i = 0, l1 = 0, l2 = 0;
 
-	if (!new)
+	if (s1 == NULL)
+		s1 = "";
+	if (s2 == NULL)
+		s2 = "";
+	while (s1[l1] != '\0')
+	{
+		l1++;
+	}
+	while (s2[l2] != '\0')
+	{
+		l2++;
+	}
+	array = malloc(sizeof(*array) * (l1 + l2 + 1));
+	if (array == NULL)
 		return (NULL);
-
-	for (i = 0; i < l1; i++)
-		new[i] = str1[i];
-
-	for (i = 0; i < l2; i++)
-		new[i + l1] = str2[i];
-
-	return (new);
+	while (*s1)
+	{
+		array[i] = *s1;
+		i++;
+		s1++;
+	}
+	while (*s2)
+	{
+		array[i] = *s2;
+		i++;
+		s2++;
+	}
+	array[i] = '\0';
+	return (array);
 }
 
 /**
