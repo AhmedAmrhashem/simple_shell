@@ -8,7 +8,7 @@ void sig_handler(int sig_num)
 {
 	if (sig_num == SIGINT)
 	{
-		_puts("\n$ ");
+		_puts("\n#cisfun$ ");
 	}
 }
 
@@ -28,7 +28,7 @@ int main(void)
 	signal(SIGINT, sig_handler);
 	while (len != EOF)
 	{
-		_puts("$ ");
+		_puts("#cisfun$ ");
 		getline(&buffer, &len, stdin);
 		if (len == -1)
 		{
