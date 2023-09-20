@@ -27,7 +27,7 @@ int shell_execute(char **args)
 		return (shell_launch(args, flag));
 	}
 	path = _getenv("PATH");
-	environs = shell_split_line(path);
+	environs = string_split(path);
 	for (i = 0; environs[i]; i++)
 	{
 		pathcat1 = str_concat(environs[i], "/");

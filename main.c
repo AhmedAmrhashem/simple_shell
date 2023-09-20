@@ -28,12 +28,7 @@ int main(int argc __attribute__((unused)), char **argv)
 			free(pathline);
 			exit(EXIT_SUCCESS);
 		}
-
-<<<<<<< HEAD
-		lineargs = shell_split_line(pathline);
-=======
-		lineargs = string_split(line);
->>>>>>> 5af20353c61c67dfdd4d6158ea1c5e6b2a19fff7
+		lineargs = string_split(pathline);
 
 		status = shell_execute(lineargs);
 		if (status == 2)
