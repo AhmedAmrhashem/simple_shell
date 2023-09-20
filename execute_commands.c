@@ -37,7 +37,7 @@ void execute_p(char **argv)
 {
 	pid_t id;
 	int status;
-	
+
 	id = fork();
 	if (id == -1)
 	{
@@ -65,12 +65,12 @@ void execute_p(char **argv)
 
 path_l *add_node_end(path_l **head, char *str)
 {
-	path_l *new, *old;
+	path_l *new, *end;
 
 	new = malloc(sizeof(path_l));
 	if (!new)
 		return (NULL);
-	
+
 	new->direction = str;
 	new->next = NULL;
 	if (!(*head))
@@ -80,12 +80,12 @@ path_l *add_node_end(path_l **head, char *str)
 	}
 
 	end = *head;
-	
+
 	while (end->next)
 	{
 		end = end->next;
 	}
-	
+
 	end->next = new;
 	return (*head);
 }
@@ -93,21 +93,20 @@ path_l *add_node_end(path_l **head, char *str)
 /**
  * link_path - linking all dir in a linked list
  * @dir: path direstion or directory name
- * @head: head of list
  * Return: the linked list
  */
 path_l *link_path(char *dir)
 {
-	path_l *head = NULL;
+	path_l *h = NULL;
 	char *tmp = _strdup(dir);
 	char *token = strtok(tmp, ":");
 
 	while (token)
 	{
-		head = add_node_end(&head, token);
+		h = add_node_end(&h, token);
 		token = strtok(NULL, ":");
 	}
-	return (head);
+	return (h);
 }
 
 /**
@@ -130,7 +129,7 @@ char *_which(path_l *h, char *file_command)
 		{
 			return (str);
 		}
-		
+
 		free(str);
 		tmp = tmp->next;
 	}
