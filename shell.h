@@ -47,17 +47,7 @@ char *_strcat(char *dest, char *src);
 char *_strcpy(char *dest, const char *src);
 char *str_concat(char *s1, char *s2);
 int _putchar(char c);
-<<<<<<< HEAD
 void _puts(char *str);
-=======
-
-/* string_functions */
-int _strlen(char *s);
-char *_strdup(char *str);
-char *_strconcat(char *s1, char *s2);
-char **string_split(char *str);
->>>>>>> 95ac5c90ce0b346bd0c0afc745c2b052cfb975c2
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
-int _strncmp(char *s1, char *s2, int n);
 
 #endif

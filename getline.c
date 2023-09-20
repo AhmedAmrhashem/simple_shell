@@ -1,42 +1,4 @@
 #include "shell.h"
-#define SHELL_TOK_DELIM " :\t\r\n\a"
-/**
- * shell_split_line - splits the line in tokens
- * @line: get the line from the user input
- * Return: Return an array of strings of args to execute
- */
-char **shell_split_line(char *line)
-{
-	int buffersize = 0, position = 0;
-	char **arraystr = 0;
-	char *str;
-
-	while (line[buffersize])
-	{
-		buffersize++;
-	}
-	arraystr = malloc(buffersize * sizeof(char *));
-	if (!arraystr)
-	{
-		perror("lsh");
-		exit(EXIT_FAILURE);
-	}
-	str = strtok(line, SHELL_TOK_DELIM);
-	while (str != NULL)
-	{
-		arraystr[position] = str;
-		position++;
-		if (!arraystr)
-		{
-			perror("lsh");
-			exit(EXIT_FAILURE);
-		}
-		str = strtok(NULL, SHELL_TOK_DELIM);
-	}
-	arraystr[position] = NULL;
-	return (arraystr);
-}
-
 /**
  * assign_lineptr - Reassigns the lineptr variable for _getline.
  * @lineptr: A buffer to store an input string.
@@ -68,19 +30,54 @@ void assign_lineptr(char **lineptr, size_t *n, char *buffer, size_t b)
 		free(buffer);
 	}
 }
-
-int lsh_eof(char **args);
 /**
- * lsh_eof - handle end of file
- * @args: arguements
- * Return: 0
+ * _getline - Reads input from a stream.
+ * @lineptr: A buffer to store the input.
+ * @n: The size of lineptr.
+ * @stream: The stream to read from.
+ * Return: The number of bytes read.
  */
-int lsh_eof(char **args)
+ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 {
-	(void)args;
-	return (0);
-}
+	static ssize_t input;
+	ssize_t ret;
+	char c = 'x', *buffer;
+	int r;
 
+	if (input == 0)
+		fflush(stream);
+	else
+		return (-1);
+	input = 0;
+	buffer = malloc(sizeof(char) * 120);
+	if (!buffer)
+		return (-1);
+	while (c != '\n')
+	{
+		r = read(STDIN_FILENO, &c, 1);
+		if (r == -1 || (r == 0 && input == 0))
+		{
+			free(buffer);
+			return (-1);
+		}
+		if (r == 0 && input != 0)
+		{
+			input++;
+			break;
+		}
+
+		if (input >= 120)
+			buffer = _realloc(buffer, input, input + 1);
+		buffer[input] = c;
+		input++;
+	}
+	buffer[input] = '\0';
+	assign_lineptr(lineptr, n, buffer, input);
+	ret = input;
+	if (r != 0)
+		input = 0;
+	return (ret);
+}
 /**
  * _strcpy - Copies the string pointed to by src, including the
  *           terminating null byte, to the buffer pointed by des.
