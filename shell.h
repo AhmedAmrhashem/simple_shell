@@ -53,6 +53,7 @@ char *_strdup(char *str);
 char *_strconcat(char *str1, char *str2);
 char **string_split(char *str);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+int _strncmp(char *s1, char *s2, int n);
 
 /* execute_command */
 char *_getenv(const char *name);

@@ -5,26 +5,45 @@
  * @name: string to be searched for
  * Return: address of desired path or variable
  */
-
 char *_getenv(const char *name)
 {
-	char **env = environ, *namePtr;
-	char *var, *value;
 
-	for (; *env != NULL; env++)
+	int i = 0, j = 0, k = 0;
+	int len = _strlen((char *)name);
+	char **env = environ;
+
+	char *str = malloc(sizeof(char) * 150);
+
+	if (!str)
 	{
-		var = *env;
-		value = var;
-		namePtr = (char *)name;
-
-		while (*namePtr != '\0' && *value != '=' && *value == *namePtr)
-		{
-			namePtr++;
-			value++;
-		}
-		if (*namePtr == '\0' && *value == '=')
-			return (value + 1);
+		return (NULL);
 	}
+	if (!name)
+	{
+		free(str);
+		return (NULL);
+	}
+	while (env[i][j] != '\0')
+	{
+		if (_strncmp(env[i], (char *)name, len) != 0)
+		{
+			i++;
+		}
+		else
+		{
+			if (env[i][len] == '=')
+			{
+				while (env[i][len + j] != '\0')
+				{
+					str[k] = (env[i][len + j + 1]);
+					k++;
+					j++;
+				}
+				return ((char *)str);
+			}
+		}
+	}
+	free(str);
 	return (NULL);
 }
 
