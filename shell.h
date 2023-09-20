@@ -68,5 +68,6 @@ void builtin_cd(char **argv);
 
 /* special_cases */
 void hash_handle(char **argv);
+void free_list(path_l *head);
 
 #endif

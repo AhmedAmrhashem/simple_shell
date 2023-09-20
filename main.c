@@ -8,7 +8,7 @@ int main(void)
 {
 	char *buffer = NULL;
 	size_t len = 0;
-	int tmp = 0;
+	int tmp = 0, i = 0;
 	path_l *head;
 	char *val, **argv, *path_name;
 	void (*func)(char **);
@@ -46,8 +46,13 @@ int main(void)
 		}
 	}
 	free(buffer);
+	while (argv[i])
+	{
+		free(argv[i]);
+		i++;
+	}
 	free(argv);
-	free_list(path_l *head);
+	free_list(head);
 	return (0);
 }
 
@@ -88,7 +93,7 @@ void free_list(path_l *head)
 	while (head)
 	{
 		remove = head->next;
-		free(head->str);
+		free(head->direction);
 		free(head);
 		head = remove;
 	}
