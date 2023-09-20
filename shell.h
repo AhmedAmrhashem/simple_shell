@@ -19,7 +19,6 @@ char **shell_split_line(char *line);
 int shell_launch(char **args, int flag);
 int shell_execute(char **args);
 void _free_double_pointer(char **d_pointer);
-char *_getline_command(void);
 
 /* Functions for Built-in commands */
 int shell_cd(char **args);
@@ -35,15 +34,10 @@ char *_getenv(const char *name);
 extern char **environ;
 void handle_signal(int m);
 
-/* getfile */
-void assign_lineptr(char **lineptr, size_t *n, char *buffer, size_t b);
-ssize_t _getfile(char **lineptr, size_t *n, FILE *stream);
-
 /* Functions for strings */
 int _strlen(char *string);
 int _strcmp(char *s1, char *s2);
 int _strncmp(char *s1, char *s2, int n);
-char *_strcpy(char *dest, const char *src);
 char *str_concat(char *s1, char *s2);
 int _putchar(char c);
 void _puts(char *str);
