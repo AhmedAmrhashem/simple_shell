@@ -13,7 +13,6 @@
 #include <errno.h>
 
 /*  File prototypes  */
-void shell_loop(char **args);
 char *shell_read_line(void);
 char **shell_split_line(char *line);
 int shell_launch(char **args, int flag);
