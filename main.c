@@ -19,7 +19,8 @@ int main(int argc __attribute__((unused)), char **av)
 	signal(SIGTSTP, handle_sigstp);
 	while (tmp != EOF)
 	{
-		_puts("$ ");
+		if (isatty(STDIN_FILENO))
+			_puts("$ ");
 		tmp = getline(&buffer, &len, stdin);
 		if (tmp == -1)
 		{

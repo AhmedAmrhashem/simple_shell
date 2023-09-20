@@ -3,7 +3,6 @@
 /**
  * handle_sigint - Signal handler for SIGINT (Ctrl+C)
  * @sig: Signal number
- *
  * Return: Nothing
  */
 void handle_sigint(int sig)
@@ -16,7 +15,6 @@ void handle_sigint(int sig)
 /**
  * handle_sigquit - Signal handler for SIGQUIT (Ctrl+\)
  * @sig: Signal number
- *
  * Return: Nothing
  */
 void handle_sigquit(int sig)
@@ -29,7 +27,6 @@ void handle_sigquit(int sig)
 /**
  * handle_sigstp - Signal handler for SIGTSTP (Ctrl+Z)
  * @sig: Signal number
- *
  * Return: Nothing
  */
 void handle_sigstp(int sig)
@@ -39,8 +36,7 @@ void handle_sigstp(int sig)
 	prompt();
 }
 /**
- * prompt - Print shell prompt to stdin stream.
- *
+ * prompt - starting point of terminal.
  * Return: void.
  */
 void prompt(void)
@@ -50,10 +46,9 @@ void prompt(void)
 }
 
 /**
- * _puterror - Prints an error message to the standard error stream
+ * _puterror - printing the error message
  * @err: The error message to print
- *
- * Return: Void
+ * Return: void
  */
 void _puterror(char *err)
 {
