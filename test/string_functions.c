@@ -135,8 +135,8 @@ char **string_split(char *str)
 			exit(EXIT_FAILURE);
 		}
 		tokens[i - 1] = token;
-		token = strtok(NULL, " \t\n");
-		}
+		token = strtok(NULL, TOK_DELIM);
+	}
 
 	return (tokens);
 }
