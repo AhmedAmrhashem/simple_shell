@@ -2,16 +2,17 @@
 
 /**
  * main - entry point to shell
+ * @argc: input count
+ * @av: file name
  * Return: 0 in success
  */
 int main(int argc __attribute__((unused)), char **av)
 {
-	char *buffer = NULL;
+	char *buffer =  NULL;
 	size_t len = 0;
 	int tmp = 0, i = 0;
-	path_l *head;
-	char *val, **argv, *path_name;
-	void (*func)(char **);
+	path_l *head = NULL;
+	char **argv;
 
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, handle_sigquit);
@@ -31,31 +32,7 @@ int main(int argc __attribute__((unused)), char **av)
 		}
 		argv = string_split(buffer);
 		hash_handle(argv);
-		if (argv && argv[0])
-		{
-			val = _getenv("PATH");
-			head = link_path(val);
-			path_name = _which(head, argv[0]);
-			func = builtin_func(argv);
-			if (func)
-			{
-				func(argv);
-			}
-			else if (!path_name)
-			{
-				error_message(argv, av);
-			}
-			else if(path_name)
-			{
-				argv[0] = path_name;
-				execute_p(argv);
-				free(argv[0]);
-			}
-		}
-		else
-		{
-			continue;
-		}
+		launch(argv, head, av);
 	}
 	free(buffer);
 	while (argv[i])
@@ -114,6 +91,7 @@ void free_list(path_l *head)
 /**
  * error_message - error message to be printed
  * @argv: user input
+ * @av: file name
  * Return: void
  */
 void error_message(char **argv, char **av)
@@ -125,4 +103,43 @@ void error_message(char **argv, char **av)
 	_puts(argv[0]);
 	_puts(": ");
 	_puts("not found\n");
+}
+
+/**
+ * launch - condition series to execute
+ * @argv: user input
+ * @head: head of linked list
+ * @av: file name
+ * Return: void
+ */
+void launch(char **argv, path_l *head, char **av)
+{
+	char *val, *path_name;
+	void (*func)(char **);
+
+	if (argv && argv[0])
+	{
+		val = _getenv("PATH");
+		head = link_path(val);
+		path_name = _which(head, argv[0]);
+		func = builtin_func(argv);
+		if (func)
+		{
+			func(argv);
+		}
+		else if (!path_name)
+		{
+			error_message(argv, av);
+		}
+		else if (path_name)
+		{
+			argv[0] = path_name;
+			execute_p(argv);
+			free(argv[0]);
+		}
+	}
+	else
+	{
+		return;
+	}
 }

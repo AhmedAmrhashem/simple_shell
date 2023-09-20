@@ -76,5 +76,6 @@ void handle_sigstp(int sig);
 void _puterror(char *err);
 void prompt(void);
 void error_message(char **argv, char **av);
+void launch(char **argv, path_l *head, char **av);
 
 #endif
