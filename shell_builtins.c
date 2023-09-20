@@ -1,10 +1,9 @@
 #include "shell.h"
 
 int shell_cd(char **args);
-int shell_help(char **args);
 int shell_exit(char **args);
-char *built_in_name[] = {"cd", "help", "exit", "env", "^D"};
-int (*search_builtin[]) (char **) = {&shell_cd, &shell_help, &shell_exit,
+char *built_in_name[] = {"cd", "exit", "env", "^D"};
+int (*search_builtin[]) (char **) = {&shell_cd, &shell_exit,
 				     &shell_env, &lsh_eof};
 /**
  * shell_num_builtins - count the amount of builtins avalibe
@@ -34,26 +33,7 @@ int shell_cd(char **args)
 	}
 	return (1);
 }
-/**
- * shell_help - display a help text of the shell
- * @args: array of strings with the arguments
- * Return: return 1 if success or exit if fail
- */
-int shell_help(char **args)
-{
-	int i;
-	*args = *args;
-	_puts("Jaime Aricapa and Frank Grijalba\n");
-	_puts("Type program names and arguments, and hit enter.\n");
-	_puts("The following are built in:\n");
-	for (i = 0; i < shell_num_builtins(); i++)
-	{
-		_puts(built_in_name[i]);
-		_puts(" \n");
-	}
-	_puts("Use the man command for information on other programs.\n");
-	return (1);
-}
+
 /**
  * shell_exit - exit of the shell
  * @args: array of strings with the arguments

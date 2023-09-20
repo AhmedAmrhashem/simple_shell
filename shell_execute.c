@@ -1,4 +1,5 @@
 #include "shell.h"
+
 /**
  * shell_execute - execute the comands inserted from input by user
  * @args: array of strings with the arguments
@@ -10,13 +11,13 @@ int shell_execute(char **args)
 	struct stat st;
 	char *path = NULL, *pathcat1 = NULL, *pathcat2 = NULL;
 	char **environs = NULL;
-	char *builtin_str[] = {"cd", "help", "exit", "env", "^D"};
+	char *builtin_str[] = {"cd", "exit", "env", "^D"};
 
-	int (*builtin_func[]) (char **) = {&shell_cd, &shell_help, &shell_exit,
+	int (*builtin_func[]) (char **) = {&shell_cd, &shell_exit,
 					   &shell_env, &lsh_eof};
 	if (args[0] == NULL)
 		return (1);
-	for (i = 0; i < shell_num_builtins(); i++)
+	for (i = 0; i < (int)(sizeof(builtin_str) / sizeof(char *)); i++)
 	{
 		if (_strcmp(args[0], builtin_str[i]) == 0)
 			return ((*builtin_func[i])(args));
