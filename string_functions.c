@@ -124,7 +124,7 @@ char **string_split(char *str)
 	char *token, **tokens;
 	int i = 0;
 
-	token = strtok(str, " \t\n");
+	token = strtok(str, TOK_DELIM);
 	while (token)
 	{
 		i++;

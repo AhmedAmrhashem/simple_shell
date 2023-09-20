@@ -13,6 +13,7 @@
 #include <errno.h>
 
 #define BUFF_SIZE 1024
+#define TOK_DELIM " :\t\r\n\a"
 
 /**
  * struct path - linked list to path directories
