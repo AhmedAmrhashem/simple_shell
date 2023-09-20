@@ -9,7 +9,7 @@ int shell_execute(char **args)
 {
 	int i = 0, c = 0, flag = 0;
 	struct stat st;
-	char *path = NULL, *pathcat1 = NULL, *pathcat2 = NULL;
+	char *path = NULL, *pathcat = NULL;
 	char **environs = NULL;
 	char *builtin_str[] = {"cd", "exit", "env", "^D"};
 
@@ -30,19 +30,18 @@ int shell_execute(char **args)
 	environs = string_split(path);
 	for (i = 0; environs[i]; i++)
 	{
-		pathcat1 = str_concat(environs[i], "/");
-		pathcat2 = str_concat(pathcat1, args[0]);
-		free(pathcat1);
-		c = stat(pathcat2, &st);
+		pathcat = str_concat(environs[i], "/");
+		pathcat = str_concat(pathcat, args[0]);
+		c = stat(pathcat, &st);
 		if (c == 0)
 		{
-			args[0] = pathcat2;
+			args[0] = pathcat;
 			free(path);
 			free(environs);
 			flag = 1;
 			return (shell_launch(args, flag));
 		}
-		free(pathcat2);
+		free(pathcat);
 	}
 	free(path);
 	free(environs);
