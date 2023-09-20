@@ -11,14 +11,14 @@ int _putchar(char c)
 }
 
 /**
- * _puts - printd a string 
+ * _puts - printd a string
  * @str: char pointer
  * Return: void
- */ 
+ */
 void _puts(char *str)
 {
 	int i = 0;
-	
+
 	while (str[i])
 	{
 		_putchar(str[i]);
