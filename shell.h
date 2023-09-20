@@ -28,17 +28,17 @@ int shell_exit(char **args);
 int shell_env(char **environ);
 int lsh_eof(char **args);
 int shell_num_builtins(void);
+
 /* Environment variables and Function´s */
+
 char *_getenv(const char *name);
 extern char **environ;
 void handle_signal(int m);
+
 /* getfile */
 void assign_lineptr(char **lineptr, size_t *n, char *buffer, size_t b);
 ssize_t _getfile(char **lineptr, size_t *n, FILE *stream);
-/* paths  */
-char *test_path(char **path, char *command);
-char *append_path(char *path, char *command);
-char *find_path(void);
+
 /* Functions for strings */
 int _strlen(char *string);
 int _strcmp(char *s1, char *s2);
