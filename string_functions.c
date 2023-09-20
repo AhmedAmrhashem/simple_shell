@@ -5,13 +5,12 @@
  * @s: char pointer
  * Return: lenght
  */
-
 int _strlen(char *s)
 {
 	int i = 0;
 
 	for (i = 0; *s != '\0'; i++)
-                s++;
+		s++;
 
 	return (i);
 }
@@ -22,7 +21,6 @@ int _strlen(char *s)
  * @str2: pointer char
  * Return: appended strings
  */
-
 char *_strconcat(char *str1, char *str2)
 {
 	int l1 = _strlen(str1), l2 = _strlen(str2), i = 0;
@@ -45,7 +43,6 @@ char *_strconcat(char *str1, char *str2)
  * @str: string
  * Return: string pointer
  */
-
 char *_strdup(char *str)
 {
 	char *arr;
@@ -76,7 +73,6 @@ char *_strdup(char *str)
  * @new_size: new size of pointer
  * Return: void
  */
-
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 {
 	char *new;
@@ -85,15 +81,15 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	unsigned int i;
 
 	if (ptr == NULL)
-                return (malloc(new_size));
+		return (malloc(new_size));
 
 	if (new_size == old_size)
-                return (ptr);
+		 return (ptr);
 
 	if (new_size == 0 && ptr != NULL)
 	{
-                free(ptr);
-                return (NULL);
+		free(ptr);
+		return (NULL);
 	}
 
 	new = malloc(new_size);
@@ -123,12 +119,11 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
  * @str: string to be tokenized
  * Return: char double pointer
  */
-
 char **string_split(char *str)
 {
 	char *token, **tokens;
 	int i = 0;
-	
+
 	token = strtok(str, " \t\n");
 	while (token)
 	{
