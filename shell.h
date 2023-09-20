@@ -43,7 +43,6 @@ ssize_t _getfile(char **lineptr, size_t *n, FILE *stream);
 int _strlen(char *string);
 int _strcmp(char *s1, char *s2);
 int _strncmp(char *s1, char *s2, int n);
-char *_strcat(char *dest, char *src);
 char *_strcpy(char *dest, const char *src);
 char *str_concat(char *s1, char *s2);
 int _putchar(char c);
