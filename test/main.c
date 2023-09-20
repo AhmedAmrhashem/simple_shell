@@ -22,14 +22,12 @@ int main(int argc __attribute__((unused)), char **av)
 		if (isatty(STDIN_FILENO))
 			_puts("$ ");
 		tmp = getline(&buffer, &len, stdin);
-		if (tmp == -1)
+		if (tmp == EOF)
 		{
 			if (isatty(STDIN_FILENO))
-			{
 				_puts("\n");
-				free(buffer);
-			}
-			exit(0);
+			free(buffer);
+			exit(EXIT_SUCCESS);
 		}
 		argv = string_split(buffer);
 		hash_handle(argv);

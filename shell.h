@@ -4,78 +4,64 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
 #include <sys/wait.h>
 #include <sys/types.h>
-#include <sys/stat.h>
-#include <string.h>
-#include <stddef.h>
-#include <signal.h>
 #include <errno.h>
+#include <stddef.h>
+#include <sys/stat.h>
+#include <signal.h>
 
-#define BUFF_SIZE 1024
+int _putchar(char c);
+void _puts(char *str);
+int _strlen(char *s);
+char *_strdup(char *str);
+char *concat_all(char *name, char *sep, char *value);
 
-/**
- * struct path - linked list to path directories
- * @direction: evergy possible path directories
- * @next: next node
- * Description: linked list for path direction
- */
+char **splitstring(char *str, const char *delim);
+void execute(char **argv);
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 
-typedef struct path
-{
-	char *direction;
-	struct path *next;
-} path_l;
-
-/**
- * struct builtin_commands - struct for builtin commands
- * @command: name of the command
- * @f: function pointer of the command
- * Description: making a strcut to realate all of the builtin commands
- */
-
-typedef struct builtin_commands
-{
-	char *command;
-	void (*f)(char **);
-} built;
 
 extern char **environ;
 
-/* write_functions */
-void _puts(char *str);
-int _putchar(char c);
+/**
+ * struct list_path - Linked list containing PATH directories
+ * @dir: directory in path
+ * @p: pointer to next node
+ */
+typedef struct list_path
+{
+	char *dir;
+	struct list_path *p;
+} list_path;
 
-/* string_functions */
-int _strlen(char *s);
-char *_strdup(char *str);
-char *_strconcat(char *str1, char *str2);
-char **string_split(char *str);
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 
-/* execute_command */
 char *_getenv(const char *name);
-void execute_p(char **arv);
-path_l *add_node_end(path_l **head, char *str);
-path_l *link_path(char *dir);
-char *_which(path_l *h, char *file_command);
+list_path *add_node_end(list_path **head, char *str);
+list_path *linkpath(char *path);
+char *_which(char *filename, list_path *head);
 
-/* builtin_commands */
-void (*builtin_func(char **argv))(char **argv);
-void builtin_exit(char **argv);
-void buitin_env(char **argv __attribute__((unused)));
-void builtin_cd(char **argv);
+/**
+ * struct mybuild - pointer to function with corresponding buildin command
+ * @name: buildin command
+ * @func: execute the buildin command
+ */
+typedef struct mybuild
+{
+	char *name;
+	void (*func)(char **);
+} mybuild;
 
-/* special_cases */
-void hash_handle(char **argv);
-void free_list(path_l *head);
+void(*checkbuild(char **arv))(char **arv);
+int _atoi(char *s);
+void exitt(char **arv);
+void env(char **arv);
+void _setenv(char **arv);
+void _unsetenv(char **arv);
 
-void handle_sigint(int sig);
-void handle_sigquit(int sig);
-void handle_sigstp(int sig);
-void _puterror(char *err);
-void prompt(void);
-void error_message(char **argv, char **av);
-void launch(char **argv, path_l *head, char **av);
+void freearv(char **arv);
+void free_list(list_path *head);
+
 
 #endif
