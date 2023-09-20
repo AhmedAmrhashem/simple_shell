@@ -35,7 +35,7 @@ char *_getenv(const char *name)
  */
 void execute_p(char **argv)
 {
-	pid_t id, wid;
+	pid_t id;
 	int status;
 
 	id = fork();
@@ -52,12 +52,7 @@ void execute_p(char **argv)
 	}
 	else
 	{
-		do
-		{
-			wid = waitpid(id, &status, WUNTRACED);
-		}
-		while (!WIFEXITED(status) && !WIFSIGNALED(status));
-		wid = 0;
+		wait(&status);
 	}
 }
 
@@ -126,6 +121,8 @@ char *_which(path_l *h, char *file_command)
 	char *str = NULL;
 	path_l *tmp = h;
 
+	if (stat(file_command, &st) == 0)
+		return (file_command);
 	while (tmp)
 	{
 		str = _strconcat(tmp->direction, "/");
