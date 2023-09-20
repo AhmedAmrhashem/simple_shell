@@ -12,9 +12,11 @@
 #include <fcntl.h>
 #include <errno.h>
 
+#define TOK_DELIM " :\t\r\n\a"
+
 /*  File prototypes  */
 char *shell_read_line(void);
-char **shell_split_line(char *line);
+char **string_split(char *str);
 int shell_launch(char **args, int flag);
 int shell_execute(char **args);
 void _free_double_pointer(char **d_pointer);

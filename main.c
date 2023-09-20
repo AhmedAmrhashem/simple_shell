@@ -29,7 +29,11 @@ int main(int argc __attribute__((unused)), char **argv)
 			exit(EXIT_SUCCESS);
 		}
 
+<<<<<<< HEAD
 		lineargs = shell_split_line(pathline);
+=======
+		lineargs = string_split(line);
+>>>>>>> 5af20353c61c67dfdd4d6158ea1c5e6b2a19fff7
 
 		status = shell_execute(lineargs);
 		if (status == 2)
