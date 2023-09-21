@@ -1,9 +1,5 @@
 #include "shell.h"
 
-char *commands[] = {"cd", "exit", "env", "^D"};
-int (*search_builtin[]) (char **) = {&builtin_cd, &builtin_exit,
-	&builtin_env, &End_of_File};
-
 /**
  * builtin_cd - change directory
  * @args: array of strings with the arguments
@@ -37,7 +33,7 @@ int builtin_exit(char **args)
 }
 
 /**
- * builtin__env - prints the environment
+ * builtin_env - prints the environment
  * @args: array of strings with the arguments
  * Return: return 1 if success or exit if fail
  */

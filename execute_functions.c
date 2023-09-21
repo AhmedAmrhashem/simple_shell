@@ -5,7 +5,7 @@
  * @args: array of strings with the arguments
  * Return: return 1 if success or 0 if exit is called
  */
-int excute_p(char **args)
+int execute_p(char **args)
 {
 	int i = 0, c = 0, flag = 0;
 	struct stat st;
