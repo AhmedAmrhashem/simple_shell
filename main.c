@@ -10,11 +10,9 @@ void print_err(char **argv, char **av);
  */
 int main(int argc __attribute__((unused)), char **argv)
 {
-	int prompt = 0;
-	char **lineargs = NULL;
-	int status = 1;
-	char *pathline = NULL;
-	size_t buff = 0;
+	int prompt = 0, status = 1;
+	char **av = NULL, *pathline = NULL;
+	size_t buffer = 0;
 
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, handle_sigquit);
@@ -23,25 +21,25 @@ int main(int argc __attribute__((unused)), char **argv)
 	{
 		if (isatty(STDIN_FILENO))
 		{
-			_puts("#cisfun$ ");
+			_puts("$ ");
 		}
 
-		prompt = getline(&pathline, &buff, stdin);
+		prompt = getline(&pathline, &buffer, stdin);
 
 		if (prompt == EOF)
 		{
 			free(pathline);
 			exit(EXIT_SUCCESS);
 		}
-		lineargs = string_split(pathline);
-		hash_handle(lineargs);
-		status = shell_execute(lineargs);
+		av = string_split(pathline);
+		hash_handle(av);
+		status = shell_execute(av);
 		if (status == 2)
 		{
-			print_err(argv, lineargs);
+			print_err(argv, av);
 			status = 1;
 		}
-		free(lineargs);
+		free(av);
 	}
 	free(pathline);
 	return (EXIT_SUCCESS);
@@ -82,6 +80,7 @@ void hash_handle(char **argv)
 		i++;
 	}
 }
+
 /**
  * print_err - printing error message
  * @argv: file name

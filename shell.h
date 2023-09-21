@@ -14,13 +14,14 @@
 
 #define TOK_DELIM " :\t\r\n\a"
 
+extern char **environ;
+
 /**
  * struct path - linked list to path directories
  * @direction: evergy possible path directories
  * @next: next node
  * Description: linked list for path direction
  */
-
 typedef struct path
 {
 	char *direction;
@@ -33,7 +34,6 @@ typedef struct path
  * @f: function pointer of the command
  * Description: making a strcut to realate all of the builtin commands
  */
-
 typedef struct builtin_commands
 {
 	char *command;
@@ -41,11 +41,9 @@ typedef struct builtin_commands
 } built;
 
 /*  File prototypes  */
-char *shell_read_line(void);
 char **string_split(char *str);
 int shell_launch(char **args, int flag);
 int shell_execute(char **args);
-void _free_double_pointer(char **d_pointer);
 void hash_handle(char **argv);
 
 /* Functions for Built-in commands */
@@ -58,7 +56,6 @@ int End_of_File(char **args);
 /* Environment variables and Function´s */
 
 char *_getenv(const char *name);
-extern char **environ;
 void handle_signal(int m);
 
 /* signal handlers */
