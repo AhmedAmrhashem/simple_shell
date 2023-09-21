@@ -1,11 +1,10 @@
 #include "shell.h"
+
 /**
  * _strlen - prints the length of a string
  * @s: string to print.
- * Description: this function prints the length of a string
- * section header: the header of this function is hsh.h
  * Return: string length in int
- **/
+ */
 int _strlen(char *s)
 {
 	int len = 0;
@@ -14,16 +13,14 @@ int _strlen(char *s)
 		len++;
 	return (len);
 }
+
 /**
- * _strncmp - this function compare two strings
+ * _strncmp - compare two strings in terms of length
  * @s1: the first string
  * @s2: the second string
- * @n: number to compare
- (* a blank line
- * Description: this function comparing two strings using the first value)?
-(* section header: the header of this function is shell.h)*
-* Return: return a number depends os the resul fo comparation.
-*/
+ * @n: the length of the compared strings
+ * Return: returns the difference in length
+ */
 int _strncmp(char *s1, char *s2, int n)
 {
 	int i;
@@ -37,11 +34,12 @@ int _strncmp(char *s1, char *s2, int n)
 	}
 	return (0);
 }
+
 /**
  * _strcmp - compares two strings
  * @s1: get a char
  * @s2: get a char
- * Return: return a integrer
+ * Return: return an integer
  */
 int _strcmp(char *s1, char *s2)
 {
