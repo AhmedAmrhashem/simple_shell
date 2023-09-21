@@ -7,10 +7,9 @@
  */
 int execute_p(char **argv)
 {
-	int i = 0, c = 0, flag = 0;
+	int i = 0, flag = 0;
 	struct stat st;
-	char *path = NULL, *tmp = NULL;
-	char **environs = NULL;
+	char *path = NULL, *tmp = NULL, **environs = NULL;
 	char *builtin_str[] = {"cd", "exit", "env", "^D"};
 
 	int (*builtin_func[]) (char **) = {&builtin_cd, &builtin_exit,
@@ -35,8 +34,7 @@ int execute_p(char **argv)
 	{
 		tmp = str_concat(environs[i], "/");
 		tmp = str_concat(tmp, argv[0]);
-		c = stat(tmp, &st);
-		if (c == 0)
+		if (stat(tmp, &st) == 0)
 		{
 			argv[0] = tmp;
 			free(path);
