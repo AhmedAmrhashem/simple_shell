@@ -37,22 +37,22 @@ typedef struct path
 typedef struct builtin_commands
 {
 	char *command;
-	void (*f)(char **);
+	int (*f)(char **);
 } built;
 
-/*  File prototypes  */
+/*  executing functions  */
 char **string_split(char *str);
 int execution_start(char **args, int flag);
 int execute_p(char **argv);
 void hash_handle(char **argv);
 
-/* Functions for Built-in commands */
+/* builtin functions */
 int builtin_cd(char **args);
 int builtin_exit(char **args);
 int builtin_env(char **environ);
 int End_of_File(char **args);
 
-/* Environment variables and Function´s */
+/* Environment variable */
 char *_getenv(const char *name);
 void handle_signal(int m);
 
@@ -63,7 +63,7 @@ void handle_sigstp(int sig);
 void prompt(void);
 void _puterror(char *err);
 
-/* Functions for strings */
+/* string functions */
 int _strlen(char *string);
 int _strcmp(char *s1, char *s2);
 int _strncmp(char *s1, char *s2, int n);
