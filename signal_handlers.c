@@ -35,3 +35,30 @@ void handle_sigstp(int sig)
 	_puts("\n");
 	prompt();
 }
+/**
+ * prompt - starting point of terminal.
+ * Return: void.
+ */
+void prompt(void)
+{
+	_puts("$ ");
+	fflush(stdout);
+}
+
+/**
+ * _puterror - printing the error message
+ * @err: The error message to print
+ * Return: void
+ */
+void _puterror(char *err)
+{
+	size_t len;
+	ssize_t num_written;
+
+	len = _strlen(err);
+	num_written = write(STDERR_FILENO, err, len);
+	if (num_written == -1)
+	{
+		perror("write");
+	}
+}

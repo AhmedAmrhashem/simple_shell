@@ -1,5 +1,7 @@
 #include "shell.h"
 
+void print_err(char **argv, char **av);
+
 /**
  * main - entry point
  * @argc: the amount of arguments used
@@ -14,6 +16,9 @@ int main(int argc __attribute__((unused)), char **argv)
 	char *pathline = NULL;
 	size_t buff = 0;
 
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, handle_sigquit);
+	signal(SIGTSTP, handle_sigstp);
 	while (status)
 	{
 		if (isatty(STDIN_FILENO))
@@ -33,13 +38,7 @@ int main(int argc __attribute__((unused)), char **argv)
 		status = shell_execute(lineargs);
 		if (status == 2)
 		{
-			_puts((char *)argv[0]);
-			_puts(": ");
-			_puts("1");
-			_puts(": ");
-			_puts(lineargs[0]);
-			_puts(": ");
-			_puts("not found\n");
+			print_err(argv, lineargs);
 			status = 1;
 		}
 		free(lineargs);
@@ -82,4 +81,20 @@ void hash_handle(char **argv)
 		}
 		i++;
 	}
+}
+/**
+ * print_err - printing error message
+ * @argv: file name
+ * @av: user input
+ * Return: void
+ */
+void print_err(char **argv, char **av)
+{
+	_puts((char *)argv[0]);
+	_puts(": ");
+	_puts("1");
+	_puts(": ");
+	_puts(av[0]);
+	_puts(": ");
+	_puts("not found\n");
 }

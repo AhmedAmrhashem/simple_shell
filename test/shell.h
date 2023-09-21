@@ -71,6 +71,11 @@ void builtin_cd(char **argv);
 void hash_handle(char **argv);
 void free_list(path_l *head);
 
+/* signal handlers */
+void handle_sigint(int sig);
+void handle_sigquit(int sig);
+void handle_sigstp(int sig);
+
 void handle_sigint(int sig);
 void handle_sigquit(int sig);
 void handle_sigstp(int sig);
