@@ -2,10 +2,10 @@
 
 /**
  * execute_p - execute the comands inserted from input by user
- * @args: array of strings with the arguments
+ * @argv: array of strings with the arguments
  * Return: return 1 if success or 0 if exit is called
  */
-int execute_p(char **args)
+int execute_p(char **argv)
 {
 	int i = 0, c = 0, flag = 0;
 	struct stat st;
@@ -15,31 +15,34 @@ int execute_p(char **args)
 
 	int (*builtin_func[]) (char **) = {&builtin_cd, &builtin_exit,
 					   &builtin_env, &End_of_File};
-	if (args[0] == NULL)
+	if (argv[0] == NULL)
 		return (1);
 	for (i = 0; i < (int)(sizeof(builtin_str) / sizeof(char *)); i++)
 	{
-		if (_strcmp(args[0], builtin_str[i]) == 0)
-			return ((*builtin_func[i])(args));
+		if (_strcmp(argv[0], builtin_str[i]) == 0)
+			return ((*builtin_func[i])(argv));
 	}
-	if (args[0][0] == '/')
+	if (argv[0][0] == '/')
 	{
-		return (execution_start(args, flag));
+		if (stat(argv[0], &st) == 0)
+			return (execution_start(argv, flag));
+		else
+			return (2);
 	}
 	path = _getenv("PATH");
 	environs = string_split(path);
 	for (i = 0; environs[i]; i++)
 	{
 		tmp = str_concat(environs[i], "/");
-		tmp = str_concat(tmp, args[0]);
+		tmp = str_concat(tmp, argv[0]);
 		c = stat(tmp, &st);
 		if (c == 0)
 		{
-			args[0] = tmp;
+			argv[0] = tmp;
 			free(path);
 			free(environs);
 			flag = 1;
-			return (execution_start(args, flag));
+			return (execution_start(argv, flag));
 		}
 		free(tmp);
 	}

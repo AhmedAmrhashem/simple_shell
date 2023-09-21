@@ -43,12 +43,11 @@ typedef struct builtin_commands
 /*  File prototypes  */
 char **string_split(char *str);
 int execution_start(char **args, int flag);
-int execute_p(char **args);
+int execute_p(char **argv);
 void hash_handle(char **argv);
 
 /* Functions for Built-in commands */
 int builtin_cd(char **args);
-int builtin_help(char **args);
 int builtin_exit(char **args);
 int builtin_env(char **environ);
 int End_of_File(char **args);
