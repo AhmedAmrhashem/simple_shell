@@ -58,27 +58,28 @@ int End_of_File(char **args)
 	(void)args;
 	return (0);
 }
+
 /**
- * hash_handle - handling the # char 
- * @argv:  user input
+ * hash_handle - handling the # char
+ * @argv: user input
  * Return: void
  */
 void hash_handle(char **argv)
 {
-        int i = 0;
+	int i = 0;
 
-        while (argv[i])
-        {
-                if (argv[i][0] == '#')
-                {
-                        while (argv[i])
-                        {
-                                argv[i] = NULL;
-                                free(argv[i]);
-                                i++;
-                        }
-                        return;
-                }
-                i++;
+	while (argv[i])
+	{
+		if (argv[i][0] == '#')
+		{
+			while (argv[i])
+			{
+				argv[i] = NULL;
+				free(argv[i]);
+				i++;
+			}
+			return;
+		}
+		i++;
 	}
 }
