@@ -33,7 +33,7 @@ int main(int argc __attribute__((unused)), char **argv)
 		}
 		av = string_split(pathline);
 		hash_handle(av);
-		status = shell_execute(av);
+		status = execute_p(av);
 		if (status == 2)
 		{
 			print_err(argv, av);
@@ -41,6 +41,7 @@ int main(int argc __attribute__((unused)), char **argv)
 		}
 		free(av);
 	}
+
 	free(pathline);
 	return (EXIT_SUCCESS);
 }

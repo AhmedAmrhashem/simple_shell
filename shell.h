@@ -42,19 +42,18 @@ typedef struct builtin_commands
 
 /*  File prototypes  */
 char **string_split(char *str);
-int shell_launch(char **args, int flag);
-int shell_execute(char **args);
+int execution_start(char **args, int flag);
+int execute_p(char **args);
 void hash_handle(char **argv);
 
 /* Functions for Built-in commands */
-int shell_cd(char **args);
-int shell_help(char **args);
-int shell_exit(char **args);
-int shell_env(char **environ);
+int builtin_cd(char **args);
+int builtin_help(char **args);
+int builtin_exit(char **args);
+int builtin_env(char **environ);
 int End_of_File(char **args);
 
 /* Environment variables and Function´s */
-
 char *_getenv(const char *name);
 void handle_signal(int m);
 

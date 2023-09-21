@@ -1,25 +1,15 @@
 #include "shell.h"
 
-int shell_cd(char **args);
-int shell_exit(char **args);
-char *built_in_name[] = {"cd", "exit", "env", "^D"};
-int (*search_builtin[]) (char **) = {&shell_cd, &shell_exit,
-	&shell_env, &End_of_File};
+char *commands[] = {"cd", "exit", "env", "^D"};
+int (*search_builtin[]) (char **) = {&builtin_cd, &builtin_exit,
+	&builtin_env, &End_of_File};
 
 /**
- * shell_num_builtins - count the amount of builtins avalibe
- * Return: return the number of builtins
- */
-int shell_num_builtins(void)
-{
-	return (sizeof(built_in_name) / sizeof(char *));
-}
-/**
- * shell_cd - change directory
+ * builtin_cd - change directory
  * @args: array of strings with the arguments
  * Return: return 1 if success or exit if fail
  */
-int shell_cd(char **args)
+int builtin_cd(char **args)
 {
 	if (args[1] == NULL)
 	{
@@ -36,21 +26,22 @@ int shell_cd(char **args)
 }
 
 /**
- * shell_exit - exit of the shell
+ * builtin_exit - exit of the shell
  * @args: array of strings with the arguments
  * Return: return 1 if success or exit if fail
  */
-int shell_exit(char **args)
+int builtin_exit(char **args)
 {
 	(void)args;
 	return (0);
 }
+
 /**
- * shell_env - prints the environment
+ * builtin__env - prints the environment
  * @args: array of strings with the arguments
  * Return: return 1 if success or exit if fail
  */
-int shell_env(char **args)
+int builtin_env(char **args)
 {
 	char **env = environ;
 	unsigned int i, length;

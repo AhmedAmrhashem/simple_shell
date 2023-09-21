@@ -1,20 +1,20 @@
 #include "shell.h"
 
 /**
- * shell_execute - execute the comands inserted from input by user
+ * execute_p - execute the comands inserted from input by user
  * @args: array of strings with the arguments
  * Return: return 1 if success or 0 if exit is called
  */
-int shell_execute(char **args)
+int excute_p(char **args)
 {
 	int i = 0, c = 0, flag = 0;
 	struct stat st;
-	char *path = NULL, *pathcat = NULL;
+	char *path = NULL, *tmp = NULL;
 	char **environs = NULL;
 	char *builtin_str[] = {"cd", "exit", "env", "^D"};
 
-	int (*builtin_func[]) (char **) = {&shell_cd, &shell_exit,
-					   &shell_env, &End_of_File};
+	int (*builtin_func[]) (char **) = {&builtin_cd, &builtin_exit,
+					   &builtin_env, &End_of_File};
 	if (args[0] == NULL)
 		return (1);
 	for (i = 0; i < (int)(sizeof(builtin_str) / sizeof(char *)); i++)
@@ -24,24 +24,24 @@ int shell_execute(char **args)
 	}
 	if (args[0][0] == '/')
 	{
-		return (shell_launch(args, flag));
+		return (execution_start(args, flag));
 	}
 	path = _getenv("PATH");
 	environs = string_split(path);
 	for (i = 0; environs[i]; i++)
 	{
-		pathcat = str_concat(environs[i], "/");
-		pathcat = str_concat(pathcat, args[0]);
-		c = stat(pathcat, &st);
+		tmp = str_concat(environs[i], "/");
+		tmp = str_concat(tmp, args[0]);
+		c = stat(tmp, &st);
 		if (c == 0)
 		{
-			args[0] = pathcat;
+			args[0] = tmp;
 			free(path);
 			free(environs);
 			flag = 1;
-			return (shell_launch(args, flag));
+			return (execution_start(args, flag));
 		}
-		free(pathcat);
+		free(tmp);
 	}
 	free(path);
 	free(environs);
@@ -49,7 +49,7 @@ int shell_execute(char **args)
 }
 
 /**
- * _getenv - getting the address of desired name in env
+ * _getenv - gets the address of desired name in the environment
  * @name: string to be searched for
  * Return: address of desired path or variable
  */
@@ -90,25 +90,24 @@ char *_getenv(const char *name)
 			}
 		}
 	}
-
 	free(str);
 	return (NULL);
 }
 
 /**
- * shell_launch - execute a binary file with commands and returns value
+ * execution_start - a function that starts the execution process
  * @args: array of strings with the arguments
- * @flag: is a number for (iterar) in a if;
+ * @flag: an integer used to check a condition
  * Return: return 1 if success or exit if fails
  */
-int shell_launch(char **args, int flag)
+int execution_start(char **args, int flag)
 {
-	pid_t pid;
+	pid_t id;
 	int status;
 	pid_t wpid;
 
-	pid = fork();
-	if (pid == 0)
+	id = fork();
+	if (id == 0)
 	{
 		if (execve(args[0], args, NULL) == -1)
 		{
@@ -117,14 +116,14 @@ int shell_launch(char **args, int flag)
 		}
 		exit(EXIT_FAILURE);
 	}
-	else if (pid < 0)
+	else if (id < 0)
 	{
 		perror("lsh");
 	}
 	else
 	{
 		do {
-			wpid = waitpid(pid, &status, WUNTRACED);
+			wpid = waitpid(id, &status, WUNTRACED);
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 		wpid = 0;
 	}
