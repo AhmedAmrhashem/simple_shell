@@ -1,51 +1,49 @@
 #include "shell.h"
 /**
- * str_concat - concatenate two or more strings
- *@s1: string
- *@s2: string
- * Return: the concetenated string
+ * str_concat - concatenate two strs
+ * @s1: string pointer 1
+ * @s2: string pointer 2
+ * Return: char pointer
  */
 char *str_concat(char *s1, char *s2)
 {
-	char *array = NULL;
-	int i = 0, l1 = 0, l2 = 0;
+	char *arr = NULL;
+	int i = 0, len1 = 0, len2 = 0;
 
 	if (s1 == NULL)
 		s1 = "";
 	if (s2 == NULL)
 		s2 = "";
-	while (s1[l1] != '\0')
+	while (s1[len1] != '\0')
 	{
-		l1++;
+		len1++;
 	}
-	while (s2[l2] != '\0')
+	while (s2[len2] != '\0')
 	{
-		l2++;
+		len2++;
 	}
-	array = malloc(sizeof(*array) * (l1 + l2 + 1));
-	if (array == NULL)
+	arr = malloc(sizeof(*arr) * (len1 + len2 + 1));
+	if (arr == NULL)
 		return (NULL);
 	while (*s1)
 	{
-		array[i] = *s1;
+		arr[i] = *s1;
 		i++;
 		s1++;
 	}
 	while (*s2)
 	{
-		array[i] = *s2;
+		arr[i] = *s2;
 		i++;
 		s2++;
 	}
-	array[i] = '\0';
-	return (array);
+	arr[i] = '\0';
+	return (arr);
 }
 /**
- *_puts - prints a string
- *
- *@str: pointer that will store the string's location
- *
- *Return: nothing
+ * _puts - prints a string
+ * @str: string to be printed
+ * Return: void
  */
 void _puts(char *str)
 {
@@ -56,16 +54,16 @@ void _puts(char *str)
 	}
 }
 /**
- * _realloc - reallocates a memory block
- * @ptr: pointer to the memory previously allocated
- * @old_size: is the size, in bytes, of the allocated space
- * @new_size: new size, in bytes of the new memory block
- * Return: pointer to the new memory block
+ * _realloc - reallocates a memory space
+ * @ptr: pointer to old memory
+ * @old_size: the old size
+ * @new_size: new memory to be allocated
+ * Return: newly allocated memory
  */
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 {
 	unsigned int i;
-	char *ptr_cp, *r;
+	char *tmp, *t;
 
 	if (new_size == old_size)
 		return (ptr);
@@ -76,20 +74,19 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 		free(ptr);
 		return (0);
 	}
-	ptr_cp = ptr;
-	r = malloc(new_size);
-	if (!r)
+	tmp = ptr;
+	t = malloc(new_size);
+	if (!t)
 		return (0);
 	for (i = 0; i < old_size; i++)
-		r[i] = ptr_cp[i];
+		t[i] = tmp[i];
 	free(ptr);
-	return ((void *)r);
+	return ((void *)t);
 }
 /**
  * _putchar - writes the character c to stdout
  * @c: The character to print
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
+ * Return: On success 1 or -1 in failure
  */
 int _putchar(char c)
 {
