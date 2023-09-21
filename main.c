@@ -29,7 +29,7 @@ int main(int argc __attribute__((unused)), char **argv)
 			exit(EXIT_SUCCESS);
 		}
 		lineargs = string_split(pathline);
-
+		hash_handle(lineargs);
 		status = shell_execute(lineargs);
 		if (status == 2)
 		{
@@ -57,4 +57,28 @@ int End_of_File(char **args)
 {
 	(void)args;
 	return (0);
+}
+/**
+ * hash_handle - handling the # char 
+ * @argv:  user input
+ * Return: void
+ */
+void hash_handle(char **argv)
+{
+        int i = 0;
+
+        while (argv[i])
+        {
+                if (argv[i][0] == '#')
+                {
+                        while (argv[i])
+                        {
+                                argv[i] = NULL;
+                                free(argv[i]);
+                                i++;
+                        }
+                        return;
+                }
+                i++;
+	}
 }

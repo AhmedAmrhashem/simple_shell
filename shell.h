@@ -20,6 +20,7 @@ char **string_split(char *str);
 int shell_launch(char **args, int flag);
 int shell_execute(char **args);
 void _free_double_pointer(char **d_pointer);
+void hash_handle(char **argv);
 
 /* Functions for Built-in commands */
 int shell_cd(char **args);
