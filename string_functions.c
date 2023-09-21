@@ -1,9 +1,9 @@
 #include "shell.h"
 
 /**
- * _strlen - prints the length of a string
- * @s: string to print.
- * Return: string length in int
+ * _strlen - get the legth of string
+ * @s: string pointer
+ * Return: length of string
  */
 int _strlen(char *s)
 {
@@ -15,11 +15,11 @@ int _strlen(char *s)
 }
 
 /**
- * _strncmp - compare two strings in terms of length
- * @s1: the first string
- * @s2: the second string
- * @n: the length of the compared strings
- * Return: returns the difference in length
+ * _strncmp - comparing 2 string with n starting chars
+ * @s1: string pointer 1
+ * @s2: string pointer 2
+ * @n: length to be compared
+ * Return: diffrence in length
  */
 int _strncmp(char *s1, char *s2, int n)
 {
@@ -37,9 +37,9 @@ int _strncmp(char *s1, char *s2, int n)
 
 /**
  * _strcmp - compares two strings
- * @s1: get a char
- * @s2: get a char
- * Return: return an integer
+ * @s1: string 1
+ * @s2: string 2
+ * Return: diffrence between 2 strings
  */
 int _strcmp(char *s1, char *s2)
 {
@@ -65,32 +65,31 @@ int _strcmp(char *s1, char *s2)
  */
 char **string_split(char *str)
 {
-	int buffersize = 0, position = 0;
-	char **arraystr = NULL;
-	char *string;
+	int buf_size = 0, i = 0;
+	char **token = NULL, *tokens;
 
-	while (str[buffersize])
+	while (str[buf_size])
 	{
-		buffersize++;
+		buf_size++;
 	}
-	arraystr = malloc(buffersize * sizeof(char *));
-	if (!arraystr)
+	token = malloc(buf_size * sizeof(char *));
+	if (!token)
 	{
 		perror("lsh");
 		exit(EXIT_FAILURE);
 	}
-	string = strtok(str, TOK_DELIM);
-	while (string != NULL)
+	tokens = strtok(str, TOK_DELIM);
+	while (tokens != NULL)
 	{
-		arraystr[position] = string;
-		position++;
-		if (!arraystr)
+		token[i] = tokens;
+		i++;
+		if (!token)
 		{
 			perror("lsh");
 			exit(EXIT_FAILURE);
 		}
-		string = strtok(NULL, TOK_DELIM);
+		tokens = strtok(NULL, TOK_DELIM);
 	}
-	arraystr[position] = NULL;
-	return (arraystr);
+	token[i] = NULL;
+	return (token);
 }
